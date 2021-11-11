@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  keycloak:
+    build: .
+    container_name: keycloak
+    ports:
+      - 8080:8080
+      - 9990:9990
+    restart: always
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: keycloak_db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      JDBC_PARAMS: "ssl=false"
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    networks: 
+      - keycloak_network
+    depends_on: 
+      - keycloak_db
+  
+  keycloak_db:
+    image: postgres
+    container_name: keycloak-db
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./.docker:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks: 
+      - keycloak_network
+
+networks: 
+    keycloak_network:
+        driver: bridge
+
+volumes:
+  postgres_data:
+      driver: local
