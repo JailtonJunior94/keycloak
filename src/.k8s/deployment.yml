@@ -14,7 +14,7 @@ data:
   DB_ADDR: "keycloak-sqlserver.database.windows.net"
   DB_DATABASE: "Keycloak"
   DB_USER: "KeycloakAdmin"
-  DB_PASSWORD: "2021@Keycl0@k"
+  DB_PASSWORD: ""
   DB_PORT: "1433"
 
   # KEYCLOAK_USER: admin
